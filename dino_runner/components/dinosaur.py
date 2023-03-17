@@ -1,12 +1,14 @@
 import pygame
-from dino_runner.utils.constants import *
+from pygame.sprite import Sprite
 
+from dino_runner.utils.constants import *
 
 X_POS = 80
 Y_POS = 310
 JUMP_VEL = 8.5
 
-class Dinosaur:
+
+class Dinosaur(Sprite):
     def __init__(self):
         self.image = RUNNING[0]
         self.dino_rect = self.image.get_rect()
@@ -21,7 +23,6 @@ class Dinosaur:
         self.dino_duck = False
 
     def update(self, user_imput):
-
         # add K_SPACE para pular com o space
         if (user_imput[pygame.K_UP] or user_imput[pygame.K_SPACE]) and not self.dino_jump:
             self.dino_jump = True
