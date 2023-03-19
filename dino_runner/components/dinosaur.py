@@ -1,6 +1,6 @@
 import pygame
-from pygame.sprite import Sprite
 
+from pygame.sprite import Sprite
 from dino_runner.utils.constants import *
 
 X_POS = 80
@@ -41,7 +41,7 @@ class Dinosaur(Sprite):
             self.jump()
         
         # executa o método duck
-        if self.dino_duck:
+        if self.dino_duck and not self.dino_jump:
             self.duck()
 
         if self.step_index >= 10:
@@ -55,7 +55,7 @@ class Dinosaur(Sprite):
         self.dino_rect.y = Y_POS + (35 if VAR == DUCKING else 0)
 
         # Velocidade das perninhas
-        self.step_index += .1 if VAR == DUCKING else 1
+        self.step_index += 1
 
     # método run
     def run(self):
@@ -77,6 +77,4 @@ class Dinosaur(Sprite):
         self.run_or_duck(DUCKING)
         
     def draw(self, screen):
-        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y))
-
-        
+        screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y)) 
