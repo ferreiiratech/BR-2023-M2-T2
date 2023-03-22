@@ -19,19 +19,23 @@ class ObstacleManager:
                 self.obstacles.append(Cactus(cactus_drawn))
 
             # pássaros só começam a aparecer com score acima de 300
-            elif game.score > 300:
+            elif game.score > 100:
                 self.obstacles.append(Bird(BIRD))
         self.num = random.randint(0, 1)
                 
         for obstacles in self.obstacles:
             obstacles.update(game.game_speed, self.obstacles)
             if game.player.dino_rect.colliderect(obstacles.rect):
-                game.playing = False
-                pygame.time.delay(1500)
-                
-                # Contador de morte
-                game.death_count += 1
-                break
+                if not game.player.has_power_up:
+
+                    game.playing = False
+                    pygame.time.delay(1500)
+                    
+                    # Contador de morte
+                    game.death_count += 1
+                    break
+                else:
+                    self.obstacles.remove(obstacles)
 
     def draw(self, screen):
         for obstacles in self.obstacles:

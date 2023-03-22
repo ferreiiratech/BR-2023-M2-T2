@@ -3,6 +3,11 @@ import pygame
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import *
 
+DUCK_IMG = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
+JUNP_IMG = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
+RUN_IMG = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
+
+
 X_POS = 80
 Y_POS = 310
 JUMP_VEL = 8.5
@@ -10,7 +15,8 @@ JUMP_VEL = 8.5
 
 class Dinosaur(Sprite):
     def __init__(self):
-        self.image = RUNNING[0]
+        self.type = DEFAULT_TYPE
+        self.image = RUN_IMG[self.type][0]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = X_POS
         self.dino_rect.y = Y_POS
@@ -18,18 +24,22 @@ class Dinosaur(Sprite):
         self.jump_vel = JUMP_VEL
         self.dino_jump = False
         self.dino_run = True
-
-        # add controle para o duck
         self.dino_duck = False
+        self.setup_state()
+
+    def setup_state(self):
+        self.has_power_up = False
+        self.shield = False
+        self.show_text = False
+        self.shield_time = 0
 
     def update(self, user_imput):
-        # add K_SPACE para pular com o space
         if (user_imput[pygame.K_UP] or user_imput[pygame.K_SPACE]) and not self.dino_jump:
             self.dino_jump = True
             self.dino_run = False
-        elif user_imput[pygame.K_DOWN]: # seta pra baixo dino pode abaixar
+        elif user_imput[pygame.K_DOWN]:
             self.dino_duck = True
-        elif not self.dino_jump or user_imput[pygame.K_DOWN]: # qnd n pressionar tecla DOWN ele levanta
+        elif not self.dino_jump or user_imput[pygame.K_DOWN]:
             self.dino_duck = False
             self.dino_jump = False
             self.dino_run = True
@@ -40,29 +50,24 @@ class Dinosaur(Sprite):
         if self.dino_jump:
             self.jump()
         
-        # executa o método duck
         if self.dino_duck and not self.dino_jump:
             self.duck()
 
-        if self.step_index >= 10:
+        if self.step_index >= 9:
             self.step_index = 0
 
-    # método genérico para run e duck
     def run_or_duck(self, VAR):
-        self.image = VAR[0] if self.step_index < 5 else VAR[1]
+        self.image = VAR[self.type][self.step_index // 5]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = X_POS
-        self.dino_rect.y = Y_POS + (35 if VAR == DUCKING else 0)
-
-        # Velocidade das perninhas
+        self.dino_rect.y = Y_POS + (35 if VAR == DUCK_IMG else 0)
         self.step_index += 1
 
-    # método run
     def run(self):
-        self.run_or_duck(RUNNING)
+        self.run_or_duck(RUN_IMG)
         
     def jump(self):
-        self.image = JUMPING
+        self.image = JUNP_IMG[self.type]
         if self.dino_jump:
             self.dino_rect.y -= self.jump_vel * 4
             self.jump_vel -= 0.8
@@ -71,10 +76,9 @@ class Dinosaur(Sprite):
             self.dino_rect.y = Y_POS
             self.dino_jump = False
             self.jump_vel = JUMP_VEL
-
-    # método duck    
+  
     def duck(self):
-        self.run_or_duck(DUCKING)
+        self.run_or_duck(DUCK_IMG)
         
     def draw(self, screen):
         screen.blit(self.image, (self.dino_rect.x, self.dino_rect.y)) 

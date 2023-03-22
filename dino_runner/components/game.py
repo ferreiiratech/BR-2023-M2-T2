@@ -3,6 +3,7 @@ import pygame
 from dino_runner.utils.constants import *
 from dino_runner.components.dinosaur import Dinosaur
 from dino_runner.components.obstacles.obstacleManage import ObstacleManager
+from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 
 color_black = COLORS['black']
 color_white = COLORS['white']
@@ -26,6 +27,7 @@ class Game:
         self.death_count = 0
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
+        self.power_up_manager = PowerUpManager()
 
     def execute(self):
         self.running = True
@@ -38,9 +40,8 @@ class Game:
     def run(self):
         self.playing = True
         self.obstacle_manager.reset_obstacles()
-        # toda vez que o jogo restarta, score começa cm 0
+        self.power_up_manager.reset_power_ups()
         self.score = 0
-        # Jogo reinicia com a velocidade normal
         self.game_speed = 20
         while self.playing:
             self.events()
@@ -58,11 +59,12 @@ class Game:
         self.player.update(user_imput)
         self.obstacle_manager.update(self)
         self.update_score()
+        self.power_up_manager.update(self.score, self.game_speed, self.player)
 
     def update_score(self):
         self.score += 1
         if self.score%100 == 0:
-            self.game_speed += 1 #add 1 ao invéz de 5
+            self.game_speed += 1
 
     def draw(self):
         self.clock.tick(FPS)
@@ -71,11 +73,12 @@ class Game:
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
         self.draw_score()
+        self.draw_power_up_time()
+        self.power_up_manager.draw(self.screen)
         pygame.display.update()
         pygame.display.flip()
 
     def draw_background(self):
-        # Enquanto estiver jogando, o chão se movimenta. Qnd perder, o chão pausa
         if self.playing:
             self.x_pos_bg -= self.game_speed
         
@@ -86,8 +89,7 @@ class Game:
             self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
         
-
-    # Método para renderizar o texto
+    # criar um arquivo em utils para renderizar o texto
     def text_render(self, message, color, fontText, size, position):
         font = pygame.font.Font(fontText, size)
         text = font.render(message, True, color)
@@ -95,7 +97,6 @@ class Game:
         text_rect.center = position
         self.screen.blit(text, text_rect)
 
-    # draw_score usando o text_render para exibir o score no decorrer do jogo
     def draw_score(self):
         message = f"Score: {self.score}"
         position = (1000, 50)
@@ -108,6 +109,20 @@ class Game:
             color = color_green
             
         self.text_render(message, color, FONT_STYLE, size, position)
+    
+    #continuar depois
+    def draw_power_up_time(self):
+        if self.player.has_power_up:
+            time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) / 1000, 2)
+            
+            if time_to_show >= 0:
+                message = f"{self.player.type.capitalize()} enabled for {time_to_show} seconds"
+                color = COLORS['black']
+                position = (SCREEN_WIDTH//2, 150)
+                self.text_render(message, color, FONT_STYLE, 20, position)
+            else:
+                self.player.has_power_up = False
+                self.player.type = DEFAULT_TYPE
 
     def handle_events_on_menu(self):
         for event in pygame.event.get():
@@ -154,3 +169,11 @@ class Game:
 
         pygame.display.update()
         self.handle_events_on_menu()
+
+
+# Obrigatório:
+# Implementação do HAMMER (ditroi os obstaclos) e um power de sua escolha com funcionalidade diferente da que já existe
+
+# Melhorias no código
+
+## Quina-feira Demo final, apresentar código
