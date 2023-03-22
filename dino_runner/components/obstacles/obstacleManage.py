@@ -44,6 +44,7 @@ class ObstacleManager:
                 # se for Shield, os obstacles passaram pelo dino
                 elif game.player.hammer == True:
                     self.obstacles.remove(obstacles)
+                # se o shield estiver ativado, vai atravessar os obstacles
                 
     def draw(self, screen):
         for obstacles in self.obstacles:

@@ -11,7 +11,7 @@ class PowerUpManager:
         self.power_ups = []
         self.when_appears = 0
 
-        # Controle para os PowerUp
+        # Controle para os PowerUp's
         self.num = 0
 
     def generate_power_up(self, score):
