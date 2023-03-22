@@ -41,6 +41,11 @@ class Game:
         self.playing = True
         self.obstacle_manager.reset_obstacles()
         self.power_up_manager.reset_power_ups()
+
+        # Reset dos PowerUp's
+        self.player.has_power_up = False
+        self.player.lucky_speed = False
+
         self.score = 0
         self.game_speed = 20
         while self.playing:
@@ -59,7 +64,7 @@ class Game:
         self.player.update(user_imput)
         self.obstacle_manager.update(self)
         self.update_score()
-        self.power_up_manager.update(self.score, self.game_speed, self.player)
+        self.power_up_manager.update(self)
 
     def update_score(self):
         self.score += 1
@@ -103,22 +108,27 @@ class Game:
         size = 22
         color = color_black
 
-        # Efeito para aumentar a fonte a cada 100 pontos
         if self.score%100 == 0:
             size = 40
-            color = color_green
+            color = color_green                
             
         self.text_render(message, color, FONT_STYLE, size, position)
     
-    #continuar depois
     def draw_power_up_time(self):
         if self.player.has_power_up:
+            
             time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) / 1000, 2)
             
             if time_to_show >= 0:
                 message = f"{self.player.type.capitalize()} enabled for {time_to_show} seconds"
                 color = COLORS['black']
                 position = (SCREEN_WIDTH//2, 150)
+
+                # se o poder ativado for lucky_speed teremos essa mensagem
+                if self.player.lucky_speed:
+                    message = "SPEED has been reset"
+                    # color = ?
+
                 self.text_render(message, color, FONT_STYLE, 20, position)
             else:
                 self.player.has_power_up = False
@@ -130,7 +140,6 @@ class Game:
                 self.playing = False
                 self.running = False
             elif event.type == pygame.KEYDOWN:
-                # Jogo inicia apenas com o SPACE ou UP
                 if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
                     self.run()
 
@@ -146,34 +155,30 @@ class Game:
             position = (half_screen_width, half_screen_height + 20)
             self.text_render(message, color_black, FONT_STYLE, 22, position)
         else:
-            self.screen.fill(color_gray) # pinto a tela de cinza
-            self.screen.blit(ICON, (half_screen_width - 20, half_screen_height - 140))
+            self.screen.fill(color_gray)
+            self.screen.blit(GAME_OVER, (half_screen_width - 190, half_screen_height - 220))
+            self.screen.blit(RESET, (half_screen_width - 25, half_screen_height - 50))
 
             message = "Press the spacebar to restart"
-            position = (half_screen_width, half_screen_height)
+            position = (half_screen_width, half_screen_height - 120)
             self.text_render(message, color_black, FONT_STYLE, 22, position)
             
-            message1 = f"Score: {self.score - 1} - Death {self.death_count}"
-            position = (half_screen_width , half_screen_height + 30)
+            message1 = f"Score: {self.score - 1}   -   Death: {self.death_count}"
+            position = (half_screen_width , half_screen_height + 150)
             self.text_render(message1, color_black, FONT_STYLE, 22, position)
 
-            # Chão pausado
             self.draw_background()
-
-            # mostrar mensagem "press any key to restart" ✅
-            # mostrar pontuação atingida ✅
-            # mostrar contador de morte ✅
-
-            ## resetar a contagem de pontos e a velocidade 'game_speed' qnd o jogo for restartado ✅
-            ## criar método para remover a repetição de código para texto ✅
 
         pygame.display.update()
         self.handle_events_on_menu()
 
 
 # Obrigatório:
-# Implementação do HAMMER (ditroi os obstaclos) e um power de sua escolha com funcionalidade diferente da que já existe
+
+# Implementação do HAMMER (destroi os obstacles) ✅
+
+# Implementar PowerUp de sua escolha com funcionalidade diferente da que já existe ✅
 
 # Melhorias no código
 
-## Quina-feira Demo final, apresentar código
+## Quina-feira Demo final, apresentar código completo

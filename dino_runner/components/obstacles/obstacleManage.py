@@ -17,26 +17,34 @@ class ObstacleManager:
         if len(self.obstacles) == 0:
             if self.num:
                 self.obstacles.append(Cactus(cactus_drawn))
-
-            # pássaros só começam a aparecer com score acima de 300
-            elif game.score > 100:
+            elif game.score > 300:
                 self.obstacles.append(Bird(BIRD))
+
         self.num = random.randint(0, 1)
-                
+
         for obstacles in self.obstacles:
             obstacles.update(game.game_speed, self.obstacles)
+
             if game.player.dino_rect.colliderect(obstacles.rect):
-                if not game.player.has_power_up:
+
+                # Verifica se tem algum poder ativado
+                # Se estiver ativado, e não for o lucky_speed, o bloco não será execultado e o jogador pode tocar nos obstacles
+                # Se estiver ativado, e for o lucky_speed, o bloco será execultado e o jogador perde se tocar no obstacle
+                # Se estiver desativado e o jogador tocar, perde o jogo
+
+                # Duas possibilidade de perder: tocando sem poder ou tocando com o lucky_speed
+                if (not game.player.has_power_up) or (game.player.lucky_speed):
 
                     game.playing = False
                     pygame.time.delay(1500)
-                    
-                    # Contador de morte
                     game.death_count += 1
                     break
-                else:
-                    self.obstacles.remove(obstacles)
 
+                # Se o hammer estiver ativado os obstacles serão destruidos ao tocar o dino
+                # se for Shield, os obstacles passaram pelo dino
+                elif game.player.hammer == True:
+                    self.obstacles.remove(obstacles)
+                
     def draw(self, screen):
         for obstacles in self.obstacles:
             obstacles.draw(screen)
