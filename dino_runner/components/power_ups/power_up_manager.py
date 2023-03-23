@@ -11,7 +11,7 @@ class PowerUpManager:
     def __init__(self):
         self.power_ups = []
         self.when_appears = 0
-        self.num = 0
+        self.num = 2
 
     def generate_power_up(self, score):
         if len(self.power_ups) == 0 and self.when_appears == score:
@@ -25,10 +25,10 @@ class PowerUpManager:
                 self.power_ups.append(Shield())
             elif self.num == 1:
                 self.power_ups.append(Hammer())
-            elif score > 300:
+            elif score > 30:
                 self.power_ups.append(Lucky_speed())
 
-            self.num = random.randint(0, 2)
+            self.num = 2 #random.randint(0, 2)
 
     def update(self, game):
         self.generate_power_up(game.score)
@@ -54,6 +54,8 @@ class PowerUpManager:
                     game.player.shield = False
                     game.player.hammer = False
                     game.game_speed = 20
+                    game.color_game = COLOR_BLACK
+                    game.color_text = COLOR_WHITE
                     SOUND_POWER_UP.play()
                 
                 game.player.has_power_up = True

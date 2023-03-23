@@ -26,6 +26,8 @@ class Game:
         self.playerSaved = ""
         self.death_count = 0
         self.player_name = ""
+        self.color_game = COLOR_WHITE
+        self.color_text = COLOR_BLACK
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
@@ -34,15 +36,18 @@ class Game:
     def execute(self):
         self.running = True
         while self.running:
-            # Musica ao jogar
-            pygame.mixer.music.play(-1)
-            pygame.mixer.music.set_volume(.3)
+            self.music_game()
             if not self.playing:
                 # Atualiza o HI SCORE
                 self.update_hi_score()
                 self.show_menu()
         pygame.display.quit()
         pygame.quit()
+
+    def music_game(self):
+        # Musica ao jogar
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(.3)
 
     def run(self):
         self.reset_game()
@@ -59,6 +64,8 @@ class Game:
         self.player.lucky_speed = False
         self.score = 0
         self.game_speed = 20
+        self.color_text = COLOR_BLACK
+        self.color_game = COLOR_WHITE
 
     def events_close(self):
         for event in pygame.event.get():
@@ -123,7 +130,7 @@ class Game:
 
     def draw(self):
         self.clock.tick(FPS)
-        self.screen.fill(COLOR_WHITE)
+        self.screen.fill(self.color_game)
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
@@ -157,19 +164,19 @@ class Game:
         messageScore = f"Score: {self.score}"
         position = (1000, 50)
         size = 22             
-        self.text_render(messageScore, COLOR_BLACK, FONT_STYLE, size, position)
+        self.text_render(messageScore, self.color_text, FONT_STYLE, size, position)
 
         messageSpeed = f"Speed: {self.game_speed}m/s"
         position = (100, 50)
-        self.text_render(messageSpeed, COLOR_BLACK, FONT_STYLE, size, position)
+        self.text_render(messageSpeed, self.color_text, FONT_STYLE, size, position)
 
         messageSpeed = f"HI: {self.scoreSaved}"
         position = (850, 50)
-        self.text_render(messageSpeed, COLOR_BLACK, FONT_STYLE, size, position)
+        self.text_render(messageSpeed, self.color_text, FONT_STYLE, size, position)
 
         messageSpeed = f"Player: {self.player_name}"
         position = (SCREEN_WIDTH//2, 50)
-        self.text_render(messageSpeed, COLOR_BLACK, FONT_STYLE, size, position)
+        self.text_render(messageSpeed, self.color_text, FONT_STYLE, size, position)
 
     def draw_power_up_time(self):
         if self.player.has_power_up:
@@ -186,7 +193,7 @@ class Game:
                 if self.player.lucky_speed:
                     message = "SPEED has been reset"
 
-                self.text_render(message, COLOR_BLACK, FONT_STYLE, 20, position)
+                self.text_render(message, self.color_text, FONT_STYLE, 20, position)
             else:
                 self.player.has_power_up = False
                 self.player.type = DEFAULT_TYPE
