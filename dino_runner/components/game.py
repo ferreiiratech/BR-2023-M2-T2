@@ -21,6 +21,8 @@ class Game:
         self.x_pos_bg = 0
         self.y_pos_bg = 380
         self.score = 0
+
+        ## add
         self.hi_score = 0
         self.scoreSaved = 0
         self.playerSaved = ""
