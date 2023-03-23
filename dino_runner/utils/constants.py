@@ -8,12 +8,10 @@ SCREEN_WIDTH = 1100
 FPS = 30
 IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
-COLORS = {
-    'white': (255,255,255),
-    'black': (0,0,0),
-    'gray': (220, 220, 220),
-    'green': (0, 255, 0)
-}
+COLOR_BLACK = (0,0,0)
+COLOR_WHITE = (255,255,255)
+COLOR_GRAY = (220, 220, 220)
+COLOR_GREEN = (0, 255, 0)
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
@@ -91,3 +89,18 @@ HAMMER_TYPE = 'hammer'
 SPEED_TYPE = 'speed'
 
 FONT_STYLE = 'freesansbold.ttf'
+
+
+#SOUNDS
+pygame.mixer.init()
+BACKGROUND_MUSIC = pygame.mixer.music.load(os.path.join(IMG_DIR, 'sounds/smb_over.mid'))
+
+SOUND_POWER_UP = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_coin.wav'))
+
+SOUND_JUMP = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_jump.wav'))
+
+SOUND_SHIELD = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_bowser_fire.wav'))
+
+SOUND_HAMMER = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_stomp_no_damage.wav'))
+
+SOUND_GAME_OVER = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_yoshi_fire.wav'))

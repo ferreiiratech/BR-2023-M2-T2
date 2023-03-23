@@ -4,14 +4,13 @@ import pygame
 from dino_runner.components.power_ups.shield import Shield
 from dino_runner.components.power_ups.hammer import Hammer
 from dino_runner.components.power_ups.lucky_speed import Lucky_speed
+from dino_runner.utils.constants import *
 
 
 class PowerUpManager:
     def __init__(self):
         self.power_ups = []
         self.when_appears = 0
-
-        # Controle para os PowerUp's
         self.num = 0
 
     def generate_power_up(self, score):
@@ -29,11 +28,9 @@ class PowerUpManager:
             elif score > 300:
                 self.power_ups.append(Lucky_speed())
 
-            # Sorteia um novo PowerUp
             self.num = random.randint(0, 2)
 
     def update(self, game):
-        print(game.game_speed)
         self.generate_power_up(game.score)
         for power_up in self.power_ups:
             power_up.update(game.game_speed, self.power_ups)
@@ -46,15 +43,18 @@ class PowerUpManager:
                     game.player.shield = True
                     game.player.hammer = False
                     game.player.lucky_speed = False
+                    SOUND_POWER_UP.play()
                 elif isinstance(power_up, Hammer):
                     game.player.hammer = True
                     game.player.shield = False
                     game.player.lucky_speed = False
+                    SOUND_POWER_UP.play()
                 elif isinstance(power_up, Lucky_speed):
                     game.player.lucky_speed = True
                     game.player.shield = False
                     game.player.hammer = False
                     game.game_speed = 20
+                    SOUND_POWER_UP.play()
                 
                 game.player.has_power_up = True
                 game.player.type = power_up.type
@@ -67,7 +67,6 @@ class PowerUpManager:
 
     def reset_power_ups(self):
         self.power_ups = []
-
         # PowerUp só irá aparecer qnd jogador atingir uma pontuação sorteiada pelo randon entre 500 e 1000
         # Mudar para (500, 1000)
         self.when_appears = random.randint(200, 300)

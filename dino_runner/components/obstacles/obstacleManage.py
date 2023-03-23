@@ -1,7 +1,7 @@
 import pygame
 import random
 
-from dino_runner.utils.constants import SMALL_CACTUS, LARGE_CACTUS, BIRD
+from dino_runner.utils.constants import *
 from dino_runner.components.obstacles.cactus import Cactus
 from dino_runner.components.obstacles.bird import Bird
 
@@ -34,7 +34,8 @@ class ObstacleManager:
 
                 # Duas possibilidade de perder: tocando sem poder ou tocando com o lucky_speed
                 if (not game.player.has_power_up) or (game.player.lucky_speed):
-
+                    pygame.mixer.music.stop()
+                    SOUND_GAME_OVER.play()
                     game.playing = False
                     pygame.time.delay(1500)
                     game.death_count += 1
@@ -43,7 +44,10 @@ class ObstacleManager:
                 # Se o hammer estiver ativado os obstacles serão destruidos ao tocar o dino
                 # se for Shield, os obstacles passaram pelo dino
                 elif game.player.hammer == True:
+                    SOUND_HAMMER.play()
                     self.obstacles.remove(obstacles)
+                else:
+                    SOUND_SHIELD.play()
                 # se o shield estiver ativado, vai atravessar os obstacles
                 
     def draw(self, screen):

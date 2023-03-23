@@ -3,11 +3,9 @@ import pygame
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import *
 
-# add os SPEED_TYPE's
 DUCK_IMG = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER, SPEED_TYPE: DUCKING}
 JUNP_IMG = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_HAMMER, SPEED_TYPE: JUMPING}
 RUN_IMG = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_HAMMER, SPEED_TYPE: RUNNING}
-
 
 X_POS = 80
 Y_POS = 310
@@ -32,10 +30,7 @@ class Dinosaur(Sprite):
         self.has_power_up = False
         self.shield = False
         self.hammer = False
-
-        # Criei
         self.lucky_speed = False
-        
         self.show_text = False
         self.shield_time = 0
 
@@ -43,6 +38,8 @@ class Dinosaur(Sprite):
         if (user_imput[pygame.K_UP] or user_imput[pygame.K_SPACE]) and not self.dino_jump:
             self.dino_jump = True
             self.dino_run = False
+            # Som do pulo
+            SOUND_JUMP.play()
         elif user_imput[pygame.K_DOWN]:
             self.dino_duck = True
         elif not self.dino_jump or user_imput[pygame.K_DOWN]:
@@ -55,7 +52,7 @@ class Dinosaur(Sprite):
         
         if self.dino_jump:
             self.jump()
-        
+           
         if self.dino_duck and not self.dino_jump:
             self.duck()
 
