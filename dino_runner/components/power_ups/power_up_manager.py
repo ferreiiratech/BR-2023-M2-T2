@@ -11,7 +11,7 @@ class PowerUpManager:
     def __init__(self):
         self.power_ups = []
         self.when_appears = 0
-        self.num = 0
+        self.num = 2
 
     def generate_power_up(self, score):
         if len(self.power_ups) == 0 and self.when_appears == score:
@@ -25,7 +25,7 @@ class PowerUpManager:
                 self.power_ups.append(Shield())
             elif self.num == 1:
                 self.power_ups.append(Hammer())
-            elif score > 300:
+            elif score > 30:
                 self.power_ups.append(Lucky_speed())
 
             self.num = random.randint(0, 2)
@@ -39,26 +39,27 @@ class PowerUpManager:
                 
                 # Verifica qual class o power_up pertence
                 # 1 pode por vez. Se pegar um, o outro desativa
+                SOUND_POWER_UP.play()
                 if isinstance(power_up, Shield):
                     game.player.shield = True
                     game.player.hammer = False
                     game.player.lucky_speed = False
-                    SOUND_POWER_UP.play()
                 elif isinstance(power_up, Hammer):
                     game.player.hammer = True
                     game.player.shield = False
                     game.player.lucky_speed = False
-                    SOUND_POWER_UP.play()
                 elif isinstance(power_up, Lucky_speed):
                     game.player.lucky_speed = True
                     game.player.shield = False
                     game.player.hammer = False
                     game.game_speed = 20
 
-                    # Ao pegar o coração o tema muda
-                    game.color_game = COLOR_BLACK
-                    game.color_text = COLOR_WHITE
-                    SOUND_POWER_UP.play()
+                    if game.theme_dark:
+                        game.theme_dark = False
+                    else:
+                        game.theme_dark =  True
+
+                    
                 
                 game.player.has_power_up = True
                 game.player.type = power_up.type

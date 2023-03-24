@@ -21,8 +21,6 @@ class Game:
         self.x_pos_bg = 0
         self.y_pos_bg = 380
         self.score = 0
-
-        ## add
         self.hi_score = 0
         self.scoreSaved = 0
         self.playerSaved = ""
@@ -30,6 +28,7 @@ class Game:
         self.player_name = ""
         self.color_game = COLOR_WHITE
         self.color_text = COLOR_BLACK
+        self.theme_dark = False
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
@@ -66,8 +65,18 @@ class Game:
         self.player.lucky_speed = False
         self.score = 0
         self.game_speed = 20
-        self.color_text = COLOR_BLACK
-        self.color_game = COLOR_WHITE
+        self.theme_dark = False
+
+    def theme(self):
+        if self.theme_dark:
+            self.color_text = COLOR_WHITE
+            self.color_game = COLOR_BLACK
+        else:
+            self.color_text = COLOR_BLACK
+            self.color_game = COLOR_WHITE
+
+
+    
 
     def events_close(self):
         for event in pygame.event.get():
@@ -82,6 +91,7 @@ class Game:
         self.update_score()
         self.power_up_manager.update(self)
         self.cloud.update(self.game_speed)
+        self.theme()
 
     def update_score(self):
         self.score += 1
