@@ -11,7 +11,7 @@ class PowerUpManager:
     def __init__(self):
         self.power_ups = []
         self.when_appears = 0
-        self.num = 2
+        self.num = 0
 
     def generate_power_up(self, score):
         if len(self.power_ups) == 0 and self.when_appears == score:

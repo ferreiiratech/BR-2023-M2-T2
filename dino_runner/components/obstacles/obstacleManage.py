@@ -17,7 +17,7 @@ class ObstacleManager:
         if len(self.obstacles) == 0:
             if self.num:
                 self.obstacles.append(Cactus(cactus_drawn))
-            elif game.score > 30:
+            elif game.score > 300:
                 self.obstacles.append(Bird(BIRD))
 
         self.num = random.randint(0, 1)

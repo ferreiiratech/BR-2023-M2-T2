@@ -1,8 +1,3 @@
-import random
-
-from dino_runner.components.obstacles.obstacle import Obstacle
-
-
 class Bird(Obstacle):
     def __init__(self, image):
         self.type = 0
@@ -10,13 +5,10 @@ class Bird(Obstacle):
         # Posição y aleatória
         self.rect.y = random.randint(220, 325)
         self.index = 0
-        self.count = 0
 
     def draw(self, screen):
-        if self.count == 2:
-            self.index = (self.index + 1) % 37
-            self.count = 0
+        if self.index >= 10:
+            self.index = 0
         # Trocar image do Bird
         screen.blit(self.image[self.index], self.rect)
-        self.count += 1
-
+        self.index += 1

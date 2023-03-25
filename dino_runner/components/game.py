@@ -20,6 +20,7 @@ class Game:
         self.game_speed = 20
         self.x_pos_bg = 0
         self.y_pos_bg = 380
+        self.x_pos_land = 0
         self.score = 0
         self.hi_score = 0
         self.scoreSaved = 0
@@ -29,6 +30,7 @@ class Game:
         self.color_game = COLOR_WHITE
         self.color_text = COLOR_BLACK
         self.theme_dark = False
+        self.landscape = LANDSCAPE1
         self.player = Dinosaur()
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
@@ -71,9 +73,11 @@ class Game:
         if self.theme_dark:
             self.color_text = COLOR_WHITE
             self.color_game = COLOR_BLACK
+            self.landscape = LANDSCAPE2
         else:
             self.color_text = COLOR_BLACK
-            self.color_game = COLOR_WHITE
+            self.color_game = (13, 25, 41)
+            self.landscape = LANDSCAPE1
 
 
     
@@ -143,6 +147,7 @@ class Game:
     def draw(self):
         self.clock.tick(FPS)
         self.screen.fill(self.color_game)
+        self.landscape_render()
         self.draw_background()
         self.player.draw(self.screen)
         self.obstacle_manager.draw(self.screen)
@@ -154,16 +159,35 @@ class Game:
         pygame.display.flip()
 
     def draw_background(self):
-        if self.playing:
-            self.x_pos_bg -= self.game_speed
+        self.x_pos_bg -= self.game_speed
         
-        image_width = BG.get_width()
-        self.screen.blit(BG, (self.x_pos_bg, self.y_pos_bg))
-        self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
+        image_width = FLOOR.get_width()
+        self.screen.blit(FLOOR, (self.x_pos_bg, self.y_pos_bg))
+        self.screen.blit(FLOOR, (image_width + self.x_pos_bg, self.y_pos_bg))
 
         if self.x_pos_bg <= -image_width:
-            self.screen.blit(BG, (image_width + self.x_pos_bg, self.y_pos_bg))
+            self.screen.blit(FLOOR, (image_width + self.x_pos_bg, self.y_pos_bg))
             self.x_pos_bg = 0
+
+    def landscape_render(self):
+        if self.playing:
+            self.x_pos_land -= self.game_speed/8
+
+        y = -140
+
+        #if self.landscape == LANDSCAPE2:
+            #y = -20
+
+        self.screen.blit(self.landscape, (self.x_pos_land, y))
+
+        image_width = self.landscape.get_width()
+        self.screen.blit(self.landscape, (image_width + self.x_pos_land, y))
+
+        if self.x_pos_land <= -image_width:
+            self.screen.blit(self.landscape, (image_width + self.x_pos_land, y))
+            self.x_pos_land = 0
+
+
         
     def text_render(self, message, color, fontText, size, position):
         font = pygame.font.Font(fontText, size)
@@ -249,8 +273,6 @@ class Game:
             messageBestPlayer = f"Best player   -   {self.playerSaved.capitalize()}     HI Score   -   {self.scoreSaved}"
             positionBest = (half_screen_width , SCREEN_HEIGHT - 15)
             self.text_render(messageBestPlayer, COLOR_BLACK, FONT_STYLE, 18, positionBest)
-
-            self.draw_background()
 
         pygame.display.update()
         self.handle_events_on_menu()

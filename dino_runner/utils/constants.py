@@ -68,15 +68,53 @@ LARGE_CACTUS = [
 ]
 
 BIRD = [
-    pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Bird/Bird2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/1b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/2b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/3b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/4b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/5b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/6b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/7b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/8b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/9b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/11b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/12b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/13b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/14b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/15b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/16b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/17b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/18b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/19b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/20b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/21b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/22b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/23b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/24b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/25b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/26b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/27b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/28b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/29b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/30b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/31b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/32b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/33b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/34b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/35b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/36b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/37b.png"))
 ]
 
 CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
 HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
 
-BG = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
+FLOOR = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
+
+LANDSCAPE1 = pygame.image.load(os.path.join(IMG_DIR, 'Other/mountains.png'))
+
+LANDSCAPE2 = pygame.image.load(os.path.join(IMG_DIR, 'Other/crepusculo.png'))
 
 HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
 
