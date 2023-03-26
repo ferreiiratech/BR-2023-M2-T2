@@ -3,16 +3,16 @@ import pygame
 from pygame.sprite import Sprite
 from dino_runner.utils.constants import *
 
-DUCK_IMG = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER, SPEED_TYPE: DUCKING}
-JUNP_IMG = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_HAMMER, SPEED_TYPE: JUMPING}
-RUN_IMG = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_HAMMER, SPEED_TYPE: RUNNING}
+DUCK_IMG = {DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_FIRE, SPEED_TYPE: DUCKING}
+JUNP_IMG = {DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_FIRE, SPEED_TYPE: JUMPING}
+RUN_IMG = {DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_FIRE, SPEED_TYPE: RUNNING}
 
 X_POS = 80
 Y_POS = 310
 JUMP_VEL = 8.5
 
 
-class Dinosaur(Sprite):
+class Goat(Sprite):
     def __init__(self):
         self.type = DEFAULT_TYPE
         self.image = RUN_IMG[self.type][0]
@@ -63,7 +63,7 @@ class Dinosaur(Sprite):
         self.image = VAR[self.type][self.step_index // 5]
         self.dino_rect = self.image.get_rect()
         self.dino_rect.x = X_POS
-        self.dino_rect.y = Y_POS + (35 if VAR == DUCK_IMG else 0)
+        self.dino_rect.y = Y_POS + (10 if VAR == DUCK_IMG else 0)
         self.step_index += 1
 
     def run(self):
@@ -72,7 +72,7 @@ class Dinosaur(Sprite):
     def jump(self):
         self.image = JUNP_IMG[self.type]
         if self.dino_jump:
-            self.dino_rect.y -= self.jump_vel * 4
+            self.dino_rect.y -= self.jump_vel * 4.2
             self.jump_vel -= 0.8
 
         if self.jump_vel < -JUMP_VEL:

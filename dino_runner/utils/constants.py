@@ -10,50 +10,50 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 
 COLOR_BLACK = (0,0,0)
 COLOR_WHITE = (255,255,255)
-COLOR_GRAY = (220, 220, 220)
+COLOR_GRAY = (173, 211, 232)
 COLOR_GREEN = (0, 255, 0)
 
 # Assets Constants
-ICON = pygame.image.load(os.path.join(IMG_DIR, "DinoWallpaper.png"))
+ICON = pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraRun1.png"))
 
 GAME_OVER = pygame.image.load(os.path.join(IMG_DIR, "Other/GameOver.png"))
 
 RESET = pygame.image.load(os.path.join(IMG_DIR, "Other/Reset.png"))
 
-DINO_START = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoStart.png"))
+DINO_START = pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraRun1.png"))
 
 RUNNING = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraRun1.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraRun2.png")),
 ]
 
 RUNNING_SHIELD = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1Shield.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraShield.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraRun2.png")),
 ]
 
-RUNNING_HAMMER = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun1Hammer.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoRun2Hammer1.png")),
+RUNNING_FIRE = [
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraFire.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraFire2.png")),
 ]
 
-JUMPING = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJump.png"))
-JUMPING_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpShield.png"))
-JUMPING_HAMMER = pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoJumpHammer.png"))
+JUMPING = pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraJump.png"))
+JUMPING_SHIELD = pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraJumpShield.png"))
+JUMPING_FIRE = pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraFire.png"))
 
 DUCKING = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraJump.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraJump.png")),
 ]
 
 DUCKING_SHIELD = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Shield.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraJumpShield.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraJumpShield.png")),
 ]
 
-DUCKING_HAMMER = [
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck1Hammer.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Dino/DinoDuck2Hammer.png")),
+DUCKING_FIRE = [
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraFire.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraFire2.png")),
 ]
 
 SMALL_CACTUS = [
@@ -77,6 +77,7 @@ BIRD = [
     pygame.image.load(os.path.join(IMG_DIR, "Bird/7b.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/8b.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/9b.png")),
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/10b.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/11b.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/12b.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/13b.png")),
@@ -102,13 +103,12 @@ BIRD = [
     pygame.image.load(os.path.join(IMG_DIR, "Bird/33b.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/34b.png")),
     pygame.image.load(os.path.join(IMG_DIR, "Bird/35b.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Bird/36b.png")),
-    pygame.image.load(os.path.join(IMG_DIR, "Bird/37b.png"))
+    pygame.image.load(os.path.join(IMG_DIR, "Bird/36b.png"))
 ]
 
 CLOUD = pygame.image.load(os.path.join(IMG_DIR, 'Other/Cloud.png'))
 SHIELD = pygame.image.load(os.path.join(IMG_DIR, 'Other/shield.png'))
-HAMMER = pygame.image.load(os.path.join(IMG_DIR, 'Other/hammer.png'))
+FIRE_BALL = pygame.image.load(os.path.join(IMG_DIR, 'Other/fire.png'))
 
 FLOOR = pygame.image.load(os.path.join(IMG_DIR, 'Other/Track.png'))
 
@@ -116,13 +116,13 @@ LANDSCAPE1 = pygame.image.load(os.path.join(IMG_DIR, 'Other/mountains.png'))
 
 LANDSCAPE2 = pygame.image.load(os.path.join(IMG_DIR, 'Other/crepusculo.png'))
 
-HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/SmallHeart.png'))
+HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/cubo.png'))
 
 DEFAULT_TYPE = "default"
 
 SHIELD_TYPE = "shield"
 
-HAMMER_TYPE = 'hammer'
+HAMMER_TYPE = 'fire'
 
 SPEED_TYPE = 'speed'
 
@@ -141,4 +141,4 @@ SOUND_SHIELD = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_bowser_fire.
 
 SOUND_HAMMER = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_stomp_no_damage.wav'))
 
-SOUND_GAME_OVER = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_yoshi_fire.wav'))
+SOUND_GAME_OVER = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/cabraDeathh.wav'))

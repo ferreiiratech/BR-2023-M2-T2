@@ -17,7 +17,7 @@ class ObstacleManager:
         if len(self.obstacles) == 0:
             if self.num:
                 self.obstacles.append(Cactus(cactus_drawn))
-            elif game.score > 300:
+            elif game.score > 10:
                 self.obstacles.append(Bird(BIRD))
 
         self.num = random.randint(0, 1)
@@ -36,8 +36,8 @@ class ObstacleManager:
                 if (not game.player.has_power_up) or (game.player.lucky_speed):
                     pygame.mixer.music.stop()
                     SOUND_GAME_OVER.play()
+                    pygame.time.delay(2500)
                     game.playing = False
-                    pygame.time.delay(1500)
                     game.death_count += 1
                     break
 

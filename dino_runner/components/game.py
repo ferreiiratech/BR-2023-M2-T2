@@ -2,7 +2,7 @@ import pygame
 import json
 
 from dino_runner.utils.constants import *
-from dino_runner.components.dinosaur import Dinosaur
+from dino_runner.components.goat import Goat
 from dino_runner.components.obstacles.obstacleManage import ObstacleManager
 from dino_runner.components.power_ups.power_up_manager import PowerUpManager
 from dino_runner.components.clouds.cloud import Cloud
@@ -31,7 +31,7 @@ class Game:
         self.color_text = COLOR_BLACK
         self.theme_dark = False
         self.landscape = LANDSCAPE1
-        self.player = Dinosaur()
+        self.player = Goat()
         self.obstacle_manager = ObstacleManager()
         self.power_up_manager = PowerUpManager()
         self.cloud = Cloud()
@@ -175,9 +175,6 @@ class Game:
 
         y = -140
 
-        #if self.landscape == LANDSCAPE2:
-            #y = -20
-
         self.screen.blit(self.landscape, (self.x_pos_land, y))
 
         image_width = self.landscape.get_width()
@@ -229,9 +226,10 @@ class Game:
                 if self.player.lucky_speed:
                     message = "SPEED has been reset"
 
-                self.text_render(message, self.color_text, FONT_STYLE, 20, position)
+                self.text_render(message, COLOR_WHITE, FONT_STYLE, 20, position)
             else:
                 self.player.has_power_up = False
+                self.game_speed = 20
                 self.player.type = DEFAULT_TYPE
 
     def handle_events_on_menu(self):
@@ -258,21 +256,24 @@ class Game:
 
             self.requests_name()
         else:
-            self.screen.fill(COLOR_GRAY)
+            if self.theme_dark:
+                self.screen.fill(self.color_game)
+            else:
+                self.screen.fill(COLOR_GRAY)
             self.screen.blit(GAME_OVER, (half_screen_width - 190, half_screen_height - 220))
             self.screen.blit(RESET, (half_screen_width - 25, half_screen_height - 50))
 
             messageReset = "Press the spacebar to restart"
             positionReset = (half_screen_width, half_screen_height - 120)
-            self.text_render(messageReset, COLOR_BLACK, FONT_STYLE, 22, positionReset)
+            self.text_render(messageReset, self.color_text, FONT_STYLE, 22, positionReset)
             
             messageScoreFinal = f"Score: {self.score - 1}   -   Death: {self.death_count}"
             positionScoreFinal = (half_screen_width , half_screen_height + 150)
-            self.text_render(messageScoreFinal, COLOR_BLACK, FONT_STYLE, 22, positionScoreFinal)
+            self.text_render(messageScoreFinal, self.color_text, FONT_STYLE, 22, positionScoreFinal)
 
             messageBestPlayer = f"Best player   -   {self.playerSaved.capitalize()}     HI Score   -   {self.scoreSaved}"
             positionBest = (half_screen_width , SCREEN_HEIGHT - 15)
-            self.text_render(messageBestPlayer, COLOR_BLACK, FONT_STYLE, 18, positionBest)
+            self.text_render(messageBestPlayer, self.color_text, FONT_STYLE, 18, positionBest)
 
         pygame.display.update()
         self.handle_events_on_menu()
