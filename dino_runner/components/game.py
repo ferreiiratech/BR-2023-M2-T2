@@ -202,7 +202,7 @@ class Game:
                 position = (SCREEN_WIDTH//2, 150)
 
                 if self.player.portal_speed:
-                    message = "SPEED has been reset"
+                    message = "You went through the PORTAL"
 
                 self.text_render(message, COLOR_WHITE, FONT_STYLE, 20, position)
             else:
