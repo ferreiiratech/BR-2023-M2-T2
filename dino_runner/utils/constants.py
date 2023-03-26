@@ -11,7 +11,6 @@ IMG_DIR = os.path.join(os.path.dirname(__file__), "..", "assets")
 COLOR_BLACK = (0,0,0)
 COLOR_WHITE = (255,255,255)
 COLOR_GRAY = (173, 211, 232)
-COLOR_GREEN = (0, 255, 0)
 
 # Assets Constants
 ICON = pygame.image.load(os.path.join(IMG_DIR, "cabra/cabraRun1.png"))
@@ -116,18 +115,17 @@ LANDSCAPE1 = pygame.image.load(os.path.join(IMG_DIR, 'Other/mountains.png'))
 
 LANDSCAPE2 = pygame.image.load(os.path.join(IMG_DIR, 'Other/crepusculo.png'))
 
-HEART = pygame.image.load(os.path.join(IMG_DIR, 'Other/cubo.png'))
+PORTAL = pygame.image.load(os.path.join(IMG_DIR, 'Other/cubo.png'))
 
 DEFAULT_TYPE = "default"
 
 SHIELD_TYPE = "shield"
 
-HAMMER_TYPE = 'fire'
+FIRE_TYPE = 'fire'
 
-SPEED_TYPE = 'speed'
+PORTAL_TYPE = 'portal'
 
 FONT_STYLE = 'freesansbold.ttf'
-
 
 #SOUNDS
 pygame.mixer.init()
@@ -139,6 +137,6 @@ SOUND_JUMP = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_jump.wav'))
 
 SOUND_SHIELD = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_bowser_fire.wav'))
 
-SOUND_HAMMER = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_stomp_no_damage.wav'))
+SOUND_FIRE = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/smw_stomp_no_damage.wav'))
 
 SOUND_GAME_OVER = pygame.mixer.Sound(os.path.join(IMG_DIR, 'sounds/cabraDeathh.wav'))

@@ -2,8 +2,8 @@ import random
 import pygame
 
 from dino_runner.components.power_ups.shield import Shield
-from dino_runner.components.power_ups.hammer import Hammer
-from dino_runner.components.power_ups.lucky_speed import Lucky_speed
+from dino_runner.components.power_ups.fire import Fire
+from dino_runner.components.power_ups.portal_speed import Portal_speed
 from dino_runner.utils.constants import *
 
 
@@ -15,18 +15,14 @@ class PowerUpManager:
 
     def generate_power_up(self, score):
         if len(self.power_ups) == 0 and self.when_appears == score:
-                         
-            # só entra aqui se não tiver nenhum PowerUp na tela e se
-            # o valor sorteado somado com o valor sorteado anteriormente
-            # for igual ao score atual
-            self.when_appears += random.randint(200, 300) # Mudar para (500, 1000) para ficar mais raro de aparecer
+            self.when_appears += random.randint(500, 1000)
 
             if self.num == 0:
                 self.power_ups.append(Shield())
             elif self.num == 1:
-                self.power_ups.append(Hammer())
-            elif score > 30:
-                self.power_ups.append(Lucky_speed())
+                self.power_ups.append(Fire())
+            elif score > 300:
+                self.power_ups.append(Portal_speed())
 
             self.num = random.randint(0, 2)
 
@@ -37,23 +33,21 @@ class PowerUpManager:
             power_up.update(game.game_speed, self.power_ups)
             if game.player.dino_rect.colliderect(power_up.rect):
                 power_up.start_time = pygame.time.get_ticks()
-                
-                # Verifica qual class o power_up pertence
-                # 1 pode por vez. Se pegar um, o outro desativa
                 SOUND_POWER_UP.play()
+
                 if isinstance(power_up, Shield):
                     game.player.shield = True
-                    game.player.hammer = False
-                    game.player.lucky_speed = False
-                elif isinstance(power_up, Hammer):
-                    game.player.hammer = True
+                    game.player.fire = False
+                    game.player.portal_speed = False
+                elif isinstance(power_up, Fire):
+                    game.player.fire = True
                     game.player.shield = False
-                    game.player.lucky_speed = False
+                    game.player.portal_speed = False
                     game.game_speed = 60
-                elif isinstance(power_up, Lucky_speed):
-                    game.player.lucky_speed = True
+                elif isinstance(power_up, Portal_speed):
+                    game.player.portal_speed = True
                     game.player.shield = False
-                    game.player.hammer = False
+                    game.player.fire = False
                     game.game_speed = 20
 
                     if game.theme_dark:
@@ -61,20 +55,15 @@ class PowerUpManager:
                     else:
                         game.theme_dark =  True
 
-                    
-                
                 game.player.has_power_up = True
                 game.player.type = power_up.type
                 game.player.power_up_time = power_up.start_time + (power_up.duration * 1000)
                 self.power_ups.remove(power_up)
     
-
     def draw(self, screen):
         for power_up in self.power_ups:
             power_up.draw(screen)
 
     def reset_power_ups(self):
         self.power_ups = []
-        # PowerUp só irá aparecer qnd jogador atingir uma pontuação sorteiada pelo randon entre 500 e 1000
-        # Mudar para (500, 1000)
-        self.when_appears = random.randint(200, 300)
+        self.when_appears = random.randint(500, 1000)

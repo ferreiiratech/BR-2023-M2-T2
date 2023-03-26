@@ -41,14 +41,12 @@ class Game:
         while self.running:
             self.music_game()
             if not self.playing:
-                # Atualiza o HI SCORE
                 self.update_hi_score()
                 self.show_menu()
         pygame.display.quit()
         pygame.quit()
 
     def music_game(self):
-        # Musica ao jogar
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(.3)
 
@@ -64,7 +62,7 @@ class Game:
         self.obstacle_manager.reset_obstacles()
         self.power_up_manager.reset_power_ups()
         self.player.has_power_up = False
-        self.player.lucky_speed = False
+        self.player.portal_speed = False
         self.score = 0
         self.game_speed = 20
         self.theme_dark = False
@@ -78,9 +76,6 @@ class Game:
             self.color_text = COLOR_BLACK
             self.color_game = (13, 25, 41)
             self.landscape = LANDSCAPE1
-
-
-    
 
     def events_close(self):
         for event in pygame.event.get():
@@ -102,32 +97,22 @@ class Game:
         if self.score%100 == 0:
             self.game_speed += 1        
 
-    # Grava e ler o HI SCORE e o PLAYER de um arquivo JSON
     def update_hi_score(self):
-        with open('dino_runner/utils/save_score.json', 'r+') as arquivo: # w, r, a, r+
-
-            # carrega uma string no formato JSON e converter em um objeto Python.
+        with open('dino_runner/utils/save_score.json', 'r+') as arquivo:
             listaHiScore = json.loads(arquivo.read())
             
             if (self.score - 1) > listaHiScore[1]:
-                # move o ponteiro leitura/escrita para o início do arquivo
                 arquivo.seek(0)
-                #Atualiza a lista
                 listaHiScore = [self.player_name, self.score - 1]
-                # Converte a lista Python em JSON e salva no arquivo
                 json.dump(listaHiScore, arquivo)
-                # cortará todo o conteúdo do arquivo a partir do ponto atual de leitura/escrita
                 arquivo.truncate()
-                # atualiza os atributos
                 self.scoreSaved = self.score - 1
                 self.playerSaved = self.player_name
             else:
                 self.scoreSaved = listaHiScore[1]
                 self.playerSaved = listaHiScore[0]
-
         arquivo.close()
 
-    # Solicita o nome do jogador
     def requests_name(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -136,13 +121,12 @@ class Game:
                     
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN and self.player_name != '':
-                    self.run()  # Sai do loop e começa o jogo
+                    self.run()
                 elif event.key == pygame.K_BACKSPACE:
-                    self.player_name = self.player_name[:-1]  # Deleta o último caractere
+                    self.player_name = self.player_name[:-1]
                 else:
                     self.player_name += event.unicode
-
-        self.text_render("Name: " + self.player_name, COLOR_BLACK, FONT_STYLE, 20, (SCREEN_WIDTH//2, 400))
+        self.text_render("Name: " + self.player_name, COLOR_WHITE, FONT_STYLE, 20, (SCREEN_WIDTH//2, 400))
 
     def draw(self):
         self.clock.tick(FPS)
@@ -184,8 +168,6 @@ class Game:
             self.screen.blit(self.landscape, (image_width + self.x_pos_land, y))
             self.x_pos_land = 0
 
-
-        
     def text_render(self, message, color, fontText, size, position):
         font = pygame.font.Font(fontText, size)
         text = font.render(message, True, color)
@@ -213,23 +195,22 @@ class Game:
 
     def draw_power_up_time(self):
         if self.player.has_power_up:
-            
-            # Subtrai o tempo atual do tempo em que o PowerUp foi ativado
-            # O resultado final é o tempo restante (em segundos) para que o powerUp expire
-            # round ele arredonda p/ 2 casas decimais
             time_to_show = round((self.player.power_up_time - pygame.time.get_ticks()) / 1000, 2)
             
             if time_to_show >= 0:
                 message = f"{self.player.type.capitalize()} enabled for {time_to_show} seconds"
                 position = (SCREEN_WIDTH//2, 150)
 
-                if self.player.lucky_speed:
+                if self.player.portal_speed:
                     message = "SPEED has been reset"
 
                 self.text_render(message, COLOR_WHITE, FONT_STYLE, 20, position)
             else:
                 self.player.has_power_up = False
-                self.game_speed = 20
+
+                if self.player.fire:
+                    self.game_speed = 20
+
                 self.player.type = DEFAULT_TYPE
 
     def handle_events_on_menu(self):
@@ -247,12 +228,15 @@ class Game:
         half_screen_width = SCREEN_WIDTH // 2
 
         if self.death_count == 0:
-            self.screen.fill(COLOR_WHITE)
+            zoom_factor = .5
+            zoomed_image = pygame.transform.scale(LANDSCAPE2, (LANDSCAPE2.get_width() * zoom_factor, LANDSCAPE2.get_height() * zoom_factor))
+            self.screen.blit(zoomed_image, (SCREEN_WIDTH//7, SCREEN_HEIGHT//4))
+
             self.screen.blit(DINO_START, (half_screen_width - 48, half_screen_height - 100))
 
             messageStart = "Type your name and press enter to start"
             position = (half_screen_width, half_screen_height + 20)
-            self.text_render(messageStart, COLOR_BLACK, FONT_STYLE, 22, position)
+            self.text_render(messageStart, COLOR_WHITE, FONT_STYLE, 22, position)
 
             self.requests_name()
         else:

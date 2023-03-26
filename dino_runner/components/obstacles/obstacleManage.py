@@ -26,29 +26,18 @@ class ObstacleManager:
             obstacles.update(game.game_speed, self.obstacles)
 
             if game.player.dino_rect.colliderect(obstacles.rect):
-
-                # Verifica se tem algum poder ativado
-                # Se estiver ativado, e não for o lucky_speed, o bloco não será execultado e o jogador pode tocar nos obstacles
-                # Se estiver ativado, e for o lucky_speed, o bloco será execultado e o jogador perde se tocar no obstacle
-                # Se estiver desativado e o jogador tocar, perde o jogo
-
-                # Duas possibilidade de perder: tocando sem poder ou tocando com o lucky_speed
-                if (not game.player.has_power_up) or (game.player.lucky_speed):
+                if (not game.player.has_power_up) or (game.player.portal_speed):
                     pygame.mixer.music.stop()
                     SOUND_GAME_OVER.play()
                     pygame.time.delay(2500)
                     game.playing = False
                     game.death_count += 1
                     break
-
-                # Se o hammer estiver ativado os obstacles serão destruidos ao tocar o dino
-                # se for Shield, os obstacles passaram pelo dino
-                elif game.player.hammer == True:
-                    SOUND_HAMMER.play()
+                elif game.player.fire == True:
+                    SOUND_FIRE.play()
                     self.obstacles.remove(obstacles)
                 else:
                     SOUND_SHIELD.play()
-                # se o shield estiver ativado, vai atravessar os obstacles
                 
     def draw(self, screen):
         for obstacles in self.obstacles:
